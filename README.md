@@ -8,15 +8,28 @@
 
 根据自家银点猫外貌制作「🤍 我家银点」：银白／奶白毛色、灰蓝双眼、粉鼻粉耳，搭配淡银灰额纹、前腿纹和冰蓝按键反馈。桌面端新增内置皮肤，可在外观菜单切换；也可通过 MCP 的 `upsert_cat` 导入 [独立预设](presets/my-silver-point.json)，参数使用 `{ "cat": <预设 JSON 对象>, "activate": true }`
 
-### 2. macOS 签名与公证：每位用户请先阅读
+### 2. macOS 下载包缺少完整签名：请在本机补签
 
-> **当前尚无本分支的 Apple Developer ID 已签名、已公证安装包。** 本次发布为源码与银点预设更新。上游下载链接在下方原文中保留，仅作上游参考，不代表本分支已验证的安装包。
+> **macOS 用户请注意：已检查的上游 4.7.0、4.9.1 下载包缺少完整的 App 签名，安装后可能出现“小猫能显示，但不响应键盘”的情况，即使输入监控、辅助功能开关已开启。使用这些下载包时，需要在用户本机补签，再重新授权。**
 >
-> 正式 macOS 分发应由**发布者**使用 Apple Developer ID Application 证书签名并提交 Apple 公证。**普通用户不需要购买开发者账号或申请证书。** 公证不会自动授予输入监控或辅助功能权限。
->
-> 临时／不完整签名及升级后的代码身份变化，可能导致“权限开关已开启，小猫仍不响应键盘”。本机已在上游 4.7.0、4.9.1 包上遇到此问题；本地补签不是正式签名、公证，也不能保证后续升级不再失效。
+> 本机补签使用 macOS 自带的 `codesign`，无需 Apple 开发者账号或付费证书。本分支尚未提供正式签名、公证的安装包，下方下载链接仍指向上游。
 
-本分支新增完整 App 签名检查；macOS 正式 tag 构建缺少 Developer ID 时拒绝继续，避免发布流程静默生成被误认为已公证的 macOS 包。提供签名、公证脚本，但 Apple 证书与认证尚未配置，正式路径尚未实测。详细修复步骤、发布要求与 Apple 官方文档见 **[macOS 签名与公证说明](docs/MACOS_SIGNING.md)**。
+**操作步骤：**
+
+1. 将 `KuroCat.app` 放入「应用程序」文件夹，并完全退出 KuroCat。
+2. 打开「终端」，依次执行以下命令，补齐本地签名并验证：
+
+   ```sh
+   codesign --force --deep --sign - --identifier com.kurocat.pet /Applications/KuroCat.app
+   codesign --verify --strict --all-architectures --verbose=2 /Applications/KuroCat.app
+   ```
+
+   校验成功时会显示 `valid on disk` 和 `satisfies its Designated Requirement`。若安装路径不同，请替换命令中的 App 路径。
+
+3. 在「系统设置 → 隐私与安全」的「输入监控」和「辅助功能」（部分系统称「设备控制和数据访问」）中，**删除旧 KuroCat 条目，再重新添加 `/Applications/KuroCat.app` 并启用**。只关闭再打开开关可能无效。
+4. 重新启动 KuroCat，在普通文本框中打字测试。
+
+**升级后若再次失灵，请重新检查签名并按上述步骤处理。** 更新包可能覆盖本机补签结果。本地补签不等于 Apple Developer ID 签名或 Apple 公证；只有对你信任的下载包才应执行。详细说明见 [macOS 本机补签与监听权限](docs/MACOS_SIGNING.md)。
 
 自动更新地址已切换至 [`chris477966/niangaocat`](https://github.com/chris477966/niangaocat)，避免分支被上游包覆盖。应用包名、Bundle ID 与 MCP 路径暂保持 KuroCat 兼容；不要同时运行两个版本。
 

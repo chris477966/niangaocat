@@ -1,4 +1,4 @@
-# macOS 签名、公证与监听权限
+# macOS 本机补签、监听权限与正式公证
 
 ## 每位 macOS 用户须知
 
@@ -9,12 +9,24 @@
 - 本机曾在上游 4.7.0、4.9.1 安装包中检查到整个 App 签名校验失败。补签并重建两项权限后，4.9.1 的监听通道已启用且订阅键盘按下／松开事件。这是单台 Mac 的诊断，不代表所有用户都会遇到或都已修复。
 - Developer ID、公证与系统隐私授权是不同机制；签名、公证不能自动授予键盘权限，也不能保证所有升级场景都无需重新授权。
 
-若可信安装包升级后失灵：退出程序，在「输入监控」及「辅助功能」（部分系统称「设备控制和数据访问」）删除旧 KuroCat 条目，重新添加实际安装路径的 App、启用并重启。若仍失灵，先验证签名，避免反复盲目授权：
+## 下载包缺少完整签名时：先补签，再重新授权
+
+已检查的上游 4.7.0、4.9.1 下载包缺少完整 App 签名。使用这些下载包时，需要在本机补签；无需购买 Apple 开发者账号。
+
+1. 把 App 放入「应用程序」，完全退出 KuroCat。
+2. 在终端执行（路径不同请相应替换）：
 
 ```sh
+codesign --force --deep --sign - --identifier com.kurocat.pet /Applications/KuroCat.app
 codesign --verify --strict --all-architectures --verbose=2 /Applications/KuroCat.app
-codesign -d --verbose=4 /Applications/KuroCat.app
 ```
+
+校验成功会显示 `valid on disk` 和 `satisfies its Designated Requirement`。第一条命令对现有 App 做本地 ad hoc 补签，不会向 Apple 申请证书或完成公证。
+
+3. 在「输入监控」及「辅助功能」（部分系统称「设备控制和数据访问」）删除旧 KuroCat 条目，重新添加实际安装路径的 App，启用后重启。
+4. 在普通文本框中打字测试。
+
+升级可能覆盖本机签名，导致再次失灵；遇到同样问题时重新检查并补签。只对可信来源的 App 执行；补签并不能证明下载包安全。此处 `--deep` 仅用于本机修复现有下载包；发布者的正式签名流程见下文，应逐项处理嵌套代码。
 
 本分支保留 `KuroCat.app` 和 `com.kurocat.pet`，兼容已有设置及 MCP 路径；项目名 NianGaoCat 是分支名称。不要同时运行上游与本分支；安装前备份设置与皮肤，分支的自动更新地址已改为 `chris477966/niangaocat`，避免被上游更新覆盖。
 
