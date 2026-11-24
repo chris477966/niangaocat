@@ -28,7 +28,7 @@
   "armCreaseColor": "rgba(159,165,165,0.50)",
   "tailColor": "#E3E6E3",
   "tailTipColor": "#C8CECE",
-  "tailFluffy": false,
+  "tailFluffy": true,
   "tailStripes": false,
   "accentColor": "#A7D6EB",
   "accentSideColor": "#6C9EB7",
