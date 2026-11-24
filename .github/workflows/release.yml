@@ -105,6 +105,10 @@ jobs:
         run: npm run tauri -- build --target universal-apple-darwin --bundles app
 
       - name: Package Universal macOS .dmg and .app.tar.gz
+        env:
+          # Tagged macOS releases fail closed until Developer ID + notarization
+          # are configured; manual artifacts are explicitly unnotarized tests.
+          ALLOW_ADHOC: ${{ startsWith(github.ref, 'refs/tags/v') && '0' || '1' }}
         run: |
           TAG="${{ inputs.release_tag }}"
           if [[ -z "$TAG" ]]; then
@@ -116,6 +120,7 @@ jobs:
           fi
           APP_PATH="src-tauri/target/universal-apple-darwin/release/bundle/macos/KuroCat.app"
           test -d "$APP_PATH"
+          bash scripts/sign-macos-app.sh "$APP_PATH"
           echo "=== Verify macOS minimum version & Universal slices ==="
           plutil -p "$APP_PATH/Contents/Info.plist" | grep -i MinimumSystemVersion || true
           lipo -info "$APP_PATH/Contents/MacOS/KuroCat"

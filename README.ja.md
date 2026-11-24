@@ -1,3 +1,15 @@
+# NianGaoCat — KuroCat fork
+
+Based on [qianyiai/kurocat](https://github.com/qianyiai/kurocat). Thank you to qianyiai and all KuroCat Contributors. Original MIT license and copyright are preserved. This is an independent fork, not an official upstream release.
+
+**Fork update (2026-11-24):** adds the Silver Point skin (silver-white coat, blue eyes, pink ears/nose, subtle silver markings) and macOS signing checks. See the [preset](presets/my-silver-point.json), [fork README](README.md), and [changelog](CHANGELOG.fork.md).
+
+**Notice for every macOS user:** no Developer ID signed/notarized binary release of this fork is available yet. Signing and notarization are the publisher's responsibility; users do not need an Apple Developer account. Ad hoc signing is not notarization. Updates may invalidate Input Monitoring/Accessibility authorization. See [signing status and release requirements](docs/MACOS_SIGNING.md). Links below refer to upstream releases, not verified fork binaries. Automatic updates in this fork use `chris477966/niangaocat`.
+
+---
+
+## Original upstream documentation
+
 # 🐈‍⬛ KuroCat — 無料オープンソース・デスクトップタイピング黒猫ペット
 
 <p align="center">

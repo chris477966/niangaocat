@@ -18,3 +18,9 @@ android/app/src/main/assets/web/
 *.keystore
 *.apk
 *.aab
+
+# Apple signing credentials stay outside source control
+*.p12
+*.p8
+*.mobileprovision
+*.provisionprofile

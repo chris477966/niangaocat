@@ -154,7 +154,7 @@ pub fn sanitize_cat_id(raw: &str) -> String {
 }
 
 pub fn builtin_cats() -> Vec<CatSkinConfig> {
-    vec![
+    let mut cats = vec![
         CatSkinConfig {
             id: "black".to_string(),
             name: "小黑猫".to_string(),
@@ -456,7 +456,13 @@ pub fn builtin_cats() -> Vec<CatSkinConfig> {
             accent_side_color: Some("#2563eb".to_string()),
             spots: vec![],
         },
-    ]
+    ];
+    // Keep the shared MCP preset as the single source of truth for this fork's skin.
+    let mut silver: CatSkinConfig = serde_json::from_str(include_str!("../../presets/my-silver-point.json"))
+        .expect("bundled silver point preset must be valid");
+    silver.builtin = true;
+    cats.push(silver);
+    cats
 }
 
 pub fn load_custom_cats() -> Vec<CatSkinConfig> {
@@ -637,4 +643,18 @@ pub fn cat_schema_guide() -> serde_json::Value {
             }
         }
     })
+}
+
+#[cfg(test)]
+mod fork_preset_tests {
+    #[test]
+    fn bundled_skins_load_with_unique_ids() {
+        let cats = super::builtin_cats();
+        let mut ids = std::collections::HashSet::new();
+        for cat in &cats {
+            assert!(ids.insert(&cat.id), "duplicate built-in skin: {}", cat.id);
+            assert!(cat.builtin);
+        }
+        assert!(ids.contains(&"my-silver-point".to_string()));
+    }
 }

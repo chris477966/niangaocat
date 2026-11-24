@@ -1,3 +1,31 @@
+# 🤍 NianGaoCat（年糕猫）
+
+> **开源衍生项目**：基于 [qianyiai/kurocat](https://github.com/qianyiai/kurocat)，感谢原作者 **qianyiai** 和所有 **KuroCat Contributors**。本分支独立维护，非上游官方发布；保留原 [MIT 许可证与版权声明](LICENSE)。
+
+## 本次更新 · 2026-11-24
+
+### 1. 新增银点形象
+
+根据自家银点猫外貌制作「🤍 我家银点」：银白／奶白毛色、灰蓝双眼、粉鼻粉耳，搭配淡银灰额纹、前腿纹和冰蓝按键反馈。桌面端新增内置皮肤，可在外观菜单切换；也可通过 MCP 的 `upsert_cat` 导入 [独立预设](presets/my-silver-point.json)，参数使用 `{ "cat": <预设 JSON 对象>, "activate": true }`。这是沿用 KuroCat 造型的卡通花色定制；未上传原始宠物照片。
+
+### 2. macOS 签名与公证：每位用户请先阅读
+
+> **当前尚无本分支的 Apple Developer ID 已签名、已公证安装包。** 本次发布为源码与银点预设更新。上游下载链接在下方原文中保留，仅作上游参考，不代表本分支已验证的安装包。
+>
+> 正式 macOS 分发应由**发布者**使用 Apple Developer ID Application 证书签名并提交 Apple 公证。**普通用户不需要购买开发者账号或申请证书。** 公证不会自动授予输入监控或辅助功能权限。
+>
+> 临时／不完整签名及升级后的代码身份变化，可能导致“权限开关已开启，小猫仍不响应键盘”。本机已在上游 4.7.0、4.9.1 包上遇到此问题；本地补签不是正式签名、公证，也不能保证后续升级不再失效。
+
+本分支新增完整 App 签名检查；macOS 正式 tag 构建缺少 Developer ID 时拒绝继续，避免发布流程静默生成被误认为已公证的 macOS 包。提供签名、公证脚本，但 Apple 证书与认证尚未配置，正式路径尚未实测。详细修复步骤、发布要求与 Apple 官方文档见 **[macOS 签名与公证说明](docs/MACOS_SIGNING.md)**。
+
+自动更新地址已切换至 [`chris477966/niangaocat`](https://github.com/chris477966/niangaocat)，避免分支被上游包覆盖。应用包名、Bundle ID 与 MCP 路径暂保持 KuroCat 兼容；不要同时运行两个版本。
+
+查看 [本分支更新记录](CHANGELOG.fork.md)。上游版本字段暂保持 4.9.1，本次不宣称完成跨平台二进制发布。
+
+---
+
+## 上游 KuroCat 项目说明（保留原项目介绍与致谢）
+
 # 🐈‍⬛ KuroCat — Open-Source Desktop Typing Cat Pet · 桌面打字小黑猫伴侣
 
 <p align="center">
